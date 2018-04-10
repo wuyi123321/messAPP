@@ -13,13 +13,13 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "element-ui": "^1.4.13",
+    "fastclick": "^1.0.6",
+    "jquery": "^3.2.1",
+    "muse-ui": "^2.1.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "muse-ui": "^2.1.0",
-    "fastclick": "^1.0.6",
-    "axios": "^0.17.0",
-    "jquery": "^3.2.1",
-    "velocity-animate": "^1.5.0"
+    "date-fns": "^1.29.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

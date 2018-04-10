@@ -1,104 +1,97 @@
 <style scoped>
-  .line_demo{
-    display: flex;
-  }
-  .flex-demo{
-    flex: 1;
-    height: 33vw;
-    margin-left: 0;
-    border-bottom: solid 1px #eee;
-    border-right: solid 1px #eee;
+  .main{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
-  .flex-demo:hover{
-    background: #ddd;
+  .header{
+    height: 56px;
   }
-  .flex-demo:last-child{
-    border-right: none;
+  .conter{
+    width: 100%;
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    user-select: none;
   }
-  .flex-demo .demo_name{
-    margin-top: 5px;
-    font-size: 0.26rem;
+
+  .footer{
+    border-top: solid 1px #eee;
+    height: 57px;
   }
+  .mu-buttom-item{
+    min-width: 30px;
+  }
+  .addforum{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: 56px;
+    background-color: #fffefe;
+    border-bottom: solid 1px #eee;
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  /*.mu-paper-1 {*/
+  /*box-shadow: 0 0px 0px rgba(0,0,0,.117647), 0 1px 0px rgba(0,0,0,.117647);*/
+  /*}*/
 </style>
 <template>
-  <div class="zhuye">
-    <mu-appbar title="知识共享社群" style="text-align: center">
-    </mu-appbar>
-    <div class="line_demo">
-      <div class="flex-demo" @click="hrefTo('CompanyProfile')">
-        <mu-icon value="chrome_reader_mode" :size="30" color="#009688"/>
-        <span class="demo_name">公司简介</span>
-      </div>
-      <div class="flex-demo" @click="hrefTo('Templet')">
-        <mu-icon value="open_in_browser" :size="30" color="#009688"/>
-        <span class="demo_name">PPT模板</span>
-      </div>
-      <div class="flex-demo" @click="hrefTo('SunVideo')">
-        <mu-icon value="group_work" :size="30" color="#009688"/>
-        <span class="demo_name">欣旺达视频</span>
-      </div>
-    </div>
-    <div class="line_demo">
-      <div class="flex-demo" @click="hrefTo('Gallery')">
-        <mu-icon value="photo" :size="30" color="#009688"/>
-        <span class="demo_name">图库</span>
-      </div>
-      <div class="flex-demo" @click="hrefTo('LearnResource')">
-        <mu-icon value="book" :size="30" color="#009688"/>
-        <span class="demo_name">学习资源</span>
-      </div>
-      <div class="flex-demo" @click="hrefTo('PresidentSpeech')">
-        <mu-icon value="perm_camera_mic" :size="30" color="#009688"/>
-        <span class="demo_name">总裁致辞</span>
-      </div>
-    </div>
-    <div class="line_demo">
-      <div class="flex-demo" @click="hrefTo('ProcessManagement')">
-        <mu-icon value="assignment" :size="30" color="#009688"/>
-        <span class="demo_name">阅读</span>
-      </div>
-      <div class="flex-demo" @click="hrefTo('forum')">
-        <mu-icon value="group" :size="30" color="#009688"/>
-        <span class="demo_name">OA论坛</span>
-      </div>
-      <div class="flex-demo" style="border: none">
+  <div class="main">
+    <div class="header">
 
-      </div>
+      <!--<div style="background-color: #009688;height: 20px"></div>-->
+      <mu-appbar title="设备管理" style="text-align: center">
+        <!--<mu-icon-button icon="navigate_before" slot="left" @click="closePage"/>-->
+        <!--<mu-icon-button icon="aaa" slot="right"  />-->
+      </mu-appbar>
+    </div>
+    <div class="conter">
+      <router-view style="height: 100%"></router-view>
+    </div>
+    <div class="footer">
+
+      <mu-bottom-nav :value="bottomNav" @change="handleChange">
+        <mu-bottom-nav-item value="model" title="功能" icon="collections_bookmark"/>
+        <mu-bottom-nav-item value="approval" title="审单" icon="group"/>
+        <!--<div class="mu-buttom-item" style="display: flex; flex-direction: column;justify-content:center;align-items: center;" @click="addForums">-->
+          <!--<mu-icon  :value="addicon" style="padding-right: 8px;padding-left: 8px;padding-top: 3px;padding-bottom: 3px;background-color:#009688;border-radius: 5px;color: #fff"/>-->
+        <!--</div>-->
+        <!--<mu-bottom-nav-item value="forumcard" title="发现" icon="explore"/>-->
+        <mu-bottom-nav-item value="my" title="我的" icon="perm_identity"/>
+      </mu-bottom-nav>
     </div>
   </div>
 </template>
 <script>
+
   export default {
     data () {
       return {
-
+        bottomNav: 'model',//默认底下路由
+        addicon:"add",//中间图标信息
       }
     },
     mounted:function () {
-      let self = this;
-      console.log(this);
-      var url ='http://appinter.sunwoda.com/common/getPersonalInfo.json?token='+self.token;
-      console.log(url);
-      self.$http.get(url).then((response) => {
-        console.log(response);
-         if(response.data.statusCode ==0){
-           self.userNo.setMess(response.data.dataInfo.singleData.userNo);
-   console.log("aaaaaaaaaa");
-           localStorage.setItem("userNo",response.data.dataInfo.singleData.userNo);
-           console.log(self.userNo);
-         }
-      }, (response) => {
-        console.log('error');
-      });
+      console.log(this.$router);
+      //根据路由判断底下标签
+      var a =this.$router.history.current.path;
+      var b =a.replace('/',"");
+      console.log(b);
+      this.bottomNav = b;
+
     },
-    methods:{
-      hrefTo:function (link) {
+
+    methods: {
+
+//      底下模块更换进行路由更换
+      handleChange (val) {
         let self = this;
-        this.$router.push({ path: link,query: {token:self.token} })
+        this.bottomNav = val;
+        this.$router.replace({ path: val});
       }
     }
   }

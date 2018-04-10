@@ -34,11 +34,9 @@
 </style>
 <template>
   <div>
-
       <transition :name="transitionName">
         <router-view class="child-view"></router-view>
       </transition>
-
   </div>
 </template>
 <script>
@@ -53,20 +51,11 @@
     //监听路由的路径，可以通过不同的路径去选择不同的切换效果
     watch: {
       '$route' (to, from) {
-        if(to.path == '/forummessage'){
+        console.log(from);
+         if(from.path == '/maintain' || from.path == '/equipment' ||　from.path == '/equipmentApproval'　|| from.path == '/lessuse' || from.path == '/rent' || from.path == '/scrap' || from.path == '/repair'){
+           console.log("+++++++++++++++++++++++++++++++");
           this.transitionName = 'slide-right';
         }
-        else if(to.path == '/forumItem' || to.path == '/pdfRead'){
-          this.transitionName = 'slide-left';
-          return 0
-        }
-
-        else if(from.path == '/pdfRead' || from.path == '/forumIist' || from.path == '/forumItem' || from.path == '/videoPlay' || from.path == '/collection' || from.path == '/fileitem'){
-          this.transitionName = 'slide-right';
-        }
-//        else if(from.path == '/videoPlay'){
-//          this.transitionName = 'slide-right';
-//        }
         else{
           this.transitionName = 'slide-left';
         }

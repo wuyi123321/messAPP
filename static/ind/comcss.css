@@ -24,9 +24,6 @@ img{
 html, body{
     height:100%;
 }
-.content{
-    min-height:100%;
-}
 a{
     text-decoration:none;
     border:none;
